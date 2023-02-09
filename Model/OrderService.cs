@@ -1,9 +1,12 @@
 ﻿using OSManager.Model.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace OSManager.Model
 {
     public class OrderService
     {
+        [Key]
+        [Required]
         public int Id { get; set; }
         public string Descricao { get; set; }
 

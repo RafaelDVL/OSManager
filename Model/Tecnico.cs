@@ -5,7 +5,7 @@ namespace OSManager.Model
     public class Tecnico: Pessoa
     {
 
-        public ICollection<OrderService> OrderServices { get; set; }
+        public ICollection<OrderService> OrderServices = new HashSet<OrderService>();
 
         public Tecnico()
         {
