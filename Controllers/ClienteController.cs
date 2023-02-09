@@ -45,6 +45,30 @@ namespace OSManager.Controllers
             return Ok(cliente);
         }
 
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateCliente(int id, [FromBody] Cliente cliente)
+        {
+            var clienteold = _oscontext.Clientes.FirstOrDefault(cliente => cliente.Id == id);
+            if(clienteold != null)
+            {   
+                cliente.Id = clienteold.Id;
+                clienteold = cliente;
+                _oscontext.SaveChanges();
+                return Ok(clienteold);
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteByID(int id)
+        {
+            var cliente = _oscontext.Clientes.FirstOrDefault(cliente => cliente.Id == id);
+            _oscontext.Clientes.Remove(cliente);
+            _oscontext.SaveChanges();
+            return NoContent();
+        }
+
         
     }
 }
