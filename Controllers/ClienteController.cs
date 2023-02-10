@@ -41,7 +41,7 @@ namespace OSManager.Controllers
         [HttpGet("{id}")]
         public IActionResult GetByID(int id)
         {
-            Cliente cliente = _oscontext.Clientes.FirstOrDefault(cliente => cliente.Id == id);
+            Cliente cliente = _oscontext.Clientes.Find(id);
             return Ok(cliente);
         }
 
@@ -49,11 +49,16 @@ namespace OSManager.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateCliente(int id, [FromBody] Cliente cliente)
         {
-            var clienteold = _oscontext.Clientes.FirstOrDefault(cliente => cliente.Id == id);
+            var clienteold = _oscontext.Clientes.Find(id);
             if(clienteold != null)
             {   
-                cliente.Id = clienteold.Id;
-                clienteold = cliente;
+                clienteold.Name = cliente.Name;
+                clienteold.Cpf  = cliente.Cpf;
+                clienteold.Telefone = cliente.Telefone;
+                clienteold.Perfil = cliente.Perfil;
+                clienteold.Password = cliente.Password;
+                clienteold.UrlImage = cliente.UrlImage;
+                _oscontext.Clientes.Update(clienteold);
                 _oscontext.SaveChanges();
                 return Ok(clienteold);
             }
@@ -63,7 +68,7 @@ namespace OSManager.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteByID(int id)
         {
-            var cliente = _oscontext.Clientes.FirstOrDefault(cliente => cliente.Id == id);
+            var cliente = _oscontext.Clientes.Find(id);
             _oscontext.Clientes.Remove(cliente);
             _oscontext.SaveChanges();
             return NoContent();
